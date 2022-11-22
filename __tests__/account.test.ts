@@ -1,7 +1,15 @@
 import { isBN } from 'bn.js';
 
 import typedDataExample from '../__mocks__/typedDataExample.json';
-import { Account, Contract, Provider, number, stark } from '../src';
+import {
+  Account,
+  Contract,
+  Provider,
+  addAddressPadding,
+  number,
+  stark,
+  validateAndParseAddress,
+} from '../src';
 import { feeTransactionVersion } from '../src/utils/hash';
 import { toBN } from '../src/utils/number';
 import { encodeShortString } from '../src/utils/shortString';
@@ -173,7 +181,9 @@ describe('deploy and test Wallet', () => {
       await provider.waitForTransaction(declareTx.transaction_hash);
 
       expect(declareTx).toHaveProperty('class_hash');
-      expect(declareTx.class_hash).toEqual(erc20ClassHash);
+      expect(validateAndParseAddress(declareTx.class_hash)).toEqual(
+        addAddressPadding(erc20ClassHash)
+      );
     });
 
     test('UDC Deploy', async () => {

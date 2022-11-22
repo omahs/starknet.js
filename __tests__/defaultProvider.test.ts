@@ -1,4 +1,10 @@
-import { BlockNumber, GetBlockResponse, stark } from '../src';
+import {
+  BlockNumber,
+  GetBlockResponse,
+  addAddressPadding,
+  stark,
+  validateAndParseAddress,
+} from '../src';
 import { toBN } from '../src/utils/number';
 import { erc20ClassHash, getERC20DeployPayload, getTestProvider } from './fixtures';
 
@@ -76,7 +82,7 @@ describe('defaultProvider', () => {
 
     test('getNonce()', async () => {
       const nonce = await testProvider.getNonce(erc20ContractAddress);
-      return expect(nonce).toEqual('0x0');
+      return expect(validateAndParseAddress(nonce)).toEqual(addAddressPadding('0x0'));
     });
 
     test('getClassAt(contractAddress, blockNumber="latest")', async () => {
