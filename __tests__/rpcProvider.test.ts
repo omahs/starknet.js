@@ -2,6 +2,7 @@ import { Account, GetBlockResponse, RpcProvider, ec } from '../src';
 import { StarknetChainId } from '../src/constants';
 import {
   compiledOpenZeppelinAccount,
+  describeIfNotDevnet,
   describeIfRpc,
   getTestAccount,
   getTestProvider,
@@ -28,9 +29,11 @@ describeIfRpc('RPCProvider', () => {
     );
   });
 
-  test('getPendingTransactions', async () => {
-    const transactions = await rpcProvider.getPendingTransactions();
-    expect(Array.isArray(transactions)).toBe(true);
+  describeIfNotDevnet('Not implemented in devnet', () => {
+    test('getPendingTransactions', async () => {
+      const transactions = await rpcProvider.getPendingTransactions();
+      expect(Array.isArray(transactions)).toBe(true);
+    });
   });
 
   test('getTransactionCount', async () => {
