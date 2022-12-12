@@ -206,9 +206,11 @@ export class SequencerProvider implements ProviderInterface {
         body: stringify(request),
         headers: headers as Record<string, string>,
       });
+      console.log('!!FETCH!!', url);
       const textResponse = await res.text();
       if (!res.ok) {
         // This will allow user to handle contract errors
+        console.log('!!RES-NOT-OK!!', res);
         let responseBody: any;
         try {
           responseBody = parse(textResponse);
@@ -222,6 +224,7 @@ export class SequencerProvider implements ProviderInterface {
       }
 
       if (endpoint === 'estimate_fee') {
+        console.log('!!RES-ESTIMATE_FEE!!', parse(textResponse));
         return parseAlwaysAsBig(textResponse, (_, v) => {
           if (v && typeof v === 'bigint') {
             return toBN(v.toString());
@@ -229,6 +232,7 @@ export class SequencerProvider implements ProviderInterface {
           return v;
         });
       }
+      console.log('!!RES!!', parse(textResponse));
       return parse(textResponse) as Sequencer.Endpoints[T]['RESPONSE'];
     } catch (err) {
       // rethrow custom errors

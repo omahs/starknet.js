@@ -388,7 +388,10 @@ export class Account extends Provider implements AccountInterface {
       { classHash, salt, unique, constructorCalldata },
       details
     );
-    return { declare: { ...declare, class_hash: classHash }, deploy };
+    const response = { declare: { ...declare, class_hash: classHash }, deploy };
+    console.log('!!declareDeploy details!!:', details);
+    console.log('!!declareDeploy response!!:', response);
+    return response;
   }
 
   public async deployAccount(
