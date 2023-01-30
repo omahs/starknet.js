@@ -1,8 +1,7 @@
-name: PR check
+name: PR Dev Check
 on:
   pull_request:
     branches:
-      - main
       - develop
       - beta
 

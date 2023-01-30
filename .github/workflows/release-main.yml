@@ -1,10 +1,8 @@
-name: Release
+name: Release Main
 on:
   push:
     branches:
       - main
-      - develop
-      - beta
 
 jobs:
   tests:
